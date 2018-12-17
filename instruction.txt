@@ -1,0 +1,7 @@
+
+migrate %s,%s,%s [BU],[URL], [FileList]
+
+FileList
+00023
+00024
+00025
