@@ -1,7 +1,18 @@
 
-migrate %s,%s,%s [BU],[URL], [FileList]
+migrate %s,%s,%s [BU],[URL], [FileList] [Round]
 
-FileList
+[BU]
+ABC
+
+[URL]
+https://cdn1.cloudflare.com/image/cat/
+
+[FileList]
+content.csv
+sku
 00023
 00024
 00025
+
+[Round]
+should be 3 to 10
