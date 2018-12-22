@@ -16,3 +16,21 @@ sku
 
 [Round]
 should be 3 to 10
+
+migrate_rename %s,%s,%s [BU],[URL], [FileList] [Round]
+
+[BU]
+ABC
+
+[URL]
+https://cdn1.cloudflare.com/image/cat/
+
+[FileList]
+content.csv
+pid    sku-to-rename
+00023  BUA001
+00024  BU1009
+00025  BUC223
+
+[Round]
+should be 3 to 10
