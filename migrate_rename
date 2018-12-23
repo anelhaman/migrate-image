@@ -4,6 +4,9 @@ DIRECTORY="images"
 CURRENT="$3.current"
 LINENUMBER_CURRENT=0
 FILENAME=$3 
+DATE=$(date +%H%M%S)
+SWAP_CURRENT=.$FILENAME.$DATE.swap
+
 PRINT_WARNING1(){
   echo Warning[1] Parameter has not set: migrate_rename [BU] [URL] [FileList] [Round]
 }
@@ -26,8 +29,8 @@ else
   VAL_CURRENT=$(awk '$0' $CURRENT) 
   LINENUMBER_CURRENT=$(awk '/'$VAL_CURRENT'/{print NR}' $3)
   LINENUMBER_NEXT=$((LINENUMBER_CURRENT+1))
-  tail -n +${LINENUMBER_NEXT} $FILENAME > .$FILENAME.$(date +%H%M%S).swap 
-  FILENAME=$FILENAME.swap 
+  tail -n +${LINENUMBER_NEXT} $FILENAME > $SWAP_CURRENT
+  FILENAME=$SWAP_CURRENT
 
 fi
 if [ -z "$4" ] || [ "x$4" = "x0" ] || [ "x$4" = "x1" ] ; then
@@ -65,12 +68,14 @@ if [ ! -z "$4" ] && [ $4 -gt 1 ] &&  [ $4 -lt 11 ]; then
           statusTest=$(curl -s -o /dev/null $2/"${PID}"_x${round}.jpg -w "%{http_code}") 
           if [ "x${statusTest}" = "x404" ]; then
             echo not found image ${PID}_x${round}.jpg 
-            echo ${PID}_x${round} | tee -a images/notfound/image_x${round}.csv
+            echo ${PID}_x${round} ${SKU}_x${round} | tee -a images/notfound/image_x${round}.csv
+            echo ${PID} | tee $CURRENT
           fi
           if [ "x${statusTest}" = "x200" ]; then
             #curl -s $2/"${PID}"_x${round}.jpg --output images/"${SKU}"_x${round}.jpg 
             echo ${PID}_x${round}.jpg found.
-            echo ${PID}_x${round} | tee -a images/found/image_x${round}.csv
+            echo ${PID}_x${round} ${SKU}_x${round} | tee -a images/found/image_x${round}.csv 
+            echo ${PID} | tee $CURRENT
           fi
         fi
       done < $FILENAME
