@@ -6,9 +6,10 @@ TL;DR
 Just run migrate to pull image from list
 
 ```
-migrate %s,%s,%s [BU][URL] [FileList] [Round]
+migrate %s %s %s %d [BU][URL] [FileList] [Round]
 ```
-
+%s = string (without any quotes)
+%d = numeric
 
 ### [BU]
 You have to describe your BU code.
@@ -46,8 +47,10 @@ should be 3 to 10
 We can pull image and rename as same time use migrate_rename
 
 ```
-migrate_rename %s,%s,%s [BU][URL] [FileList] [Round_start] [Round_end]
+migrate_rename %s %s %s %d %d [BU][URL] [FileList] [Round_start] [Round_end]
 ```
+%s = string (without any quotes)
+%d = numeric
 
 ### [BU]
 ```
