@@ -79,8 +79,8 @@ if [ ! -z "$4" ] && [ $4 -gt 1 ] &&  [ $4 -lt 11 ]; then
           fi
         fi
       done < $FILENAME
-
-      PRINT_WARNING2
     fi
   done
+else
+  PRINT_WARNING2
 fi
