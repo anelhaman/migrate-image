@@ -8,24 +8,24 @@ DATE=$(date +%H%M%S)
 SWAP_CURRENT=.$FILENAME.$DATE.swap
 
 PRINT_WARNING1(){
-  echo Warning[1] Parameter has not set: migrate_rename [BU] [URL] [FileList] [Round]
+  echo [`date +%H:%M:%S`] Warning[1] Parameter has not set: migrate_rename [BU] [URL] [FileList] [Round]
 }
 PRINT_WARNING2(){
-  echo Warning[2] Parameter round should start from 2 
+  echo [`date +%H:%M:%S`] Warning[2] Parameter round should start from 2 
 }
 
 if [ ! -d "$DIRECTORY" ]; then
   mkdir -p images/notfound images/found
-  echo "Folder created"
+  echo [`date +%H:%M:%S`] "Folder created"
 else
-  echo "Folder exists, continue..."
+  echo [`date +%H:%M:%S`] "Folder exists, continue..."
 fi
 
 if [ ! -f "$CURRENT" ]; then
   touch $CURRENT 
-  echo "$CURRENT created"
+  echo [`date +%H:%M:%S`] "$CURRENT created"
 else
-  echo "File status exists, continue..."
+  echo [`date +%H:%M:%S`] "File status exists, continue..."
   VAL_CURRENT=$(awk '$0' $CURRENT) 
   LINENUMBER_CURRENT=$(awk '/'$VAL_CURRENT'/{print NR}' $3)
   LINENUMBER_NEXT=$((LINENUMBER_CURRENT+1))
@@ -42,13 +42,13 @@ if [ -z "$4" ] || [ "x$4" = "x0" ] || [ "x$4" = "x1" ] ; then
     if [ ! -z "${PID} " ] && [ "x${#PID}" != "x0" ] ; then
       statusTest=$(curl -s -o /dev/null $2/"${PID}".jpg -w "%{http_code}") 
       if [ "x${statusTest}" = "x404" ]; then
-        echo not found image ${PID}.jpg 
+        echo [`date +%H:%M:%S`] not found image ${PID}.jpg 
         echo ${PID} ${SKU} | tee -a images/notfound/image.csv
         echo ${PID} | tee $CURRENT
       fi
       if [ "x${statusTest}" = "x200" ]; then
         #curl -s $2/"${PID}".jpg --output images/"${SKU}".jpg 
-        echo ${PID}.jpg found.
+        echo [`date +%H:%M:%S`] ${PID}.jpg found.
         echo ${PID} ${SKU} | tee -a images/found/image.csv
         echo ${PID} | tee $CURRENT
       fi
@@ -67,13 +67,13 @@ if [ ! -z "$4" ] && [ $4 -gt 1 ] &&  [ $4 -lt 11 ]; then
         if [ ! -z "${PID} " ] && [ "x${#PID}" != "x0" ] ;then
           statusTest=$(curl -s -o /dev/null $2/"${PID}"_x${round}.jpg -w "%{http_code}") 
           if [ "x${statusTest}" = "x404" ]; then
-            echo not found image ${PID}_x${round}.jpg 
+            echo [`date +%H:%M:%S`] not found image ${PID}_x${round}.jpg 
             echo ${PID}_x${round} ${SKU}_x${round} | tee -a images/notfound/image_x${round}.csv
             echo ${PID} | tee $CURRENT
           fi
           if [ "x${statusTest}" = "x200" ]; then
             #curl -s $2/"${PID}"_x${round}.jpg --output images/"${SKU}"_x${round}.jpg 
-            echo ${PID}_x${round}.jpg found.
+            echo [`date +%H:%M:%S`] ${PID}_x${round}.jpg found.
             echo ${PID}_x${round} ${SKU}_x${round} | tee -a images/found/image_x${round}.csv 
             echo ${PID} | tee $CURRENT
           fi
